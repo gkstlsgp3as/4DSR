@@ -5,7 +5,7 @@ import numpy as np
 import os
 import sys
 
-from dataset.dataset_utils import register_dataset, initialize_lidar, Upload_rimg
+from dataset.dataset_utils import register_dataset, read_range_image_binary, initialize_lidar
 
 
 @register_dataset('range_images')
@@ -48,7 +48,7 @@ class RangeImagesDataset(Dataset):
                 output_directory = os.path.join(directory, scene_id, res_out)#./rimg_dataset/Custom/Airl_1/128_1024
                 output_filenames = [os.path.join(output_directory, f) for f in os.listdir(output_directory) if f.endswith('.rimg')]
                 output_filenames.sort()
-                
+
                 assert (len(input_filenames) == len(output_filenames))
 
                 self.input_range_image_filenames.extend(input_filenames)
@@ -77,8 +77,8 @@ class RangeImagesDataset(Dataset):
             self.pair_split_idx = self.lidar_in['channels'] * self.lidar_in['points_per_ring']
 
             for idx, filenames in enumerate(zip(self.input_range_image_filenames, self.output_range_image_filenames)):
-                self.range_image_pairs[idx, :self.pair_split_idx] = Upload_rimg(filenames[0], self.lidar_in['channels']).flatten()#read_range_image_binary(filenames[0]).flatten()
-                self.range_image_pairs[idx, self.pair_split_idx:] = Upload_rimg(filenames[1], self.lidar_out['channels']).flatten()#read_range_image_binary(filenames[1]).flatten()
+                self.range_image_pairs[idx, :self.pair_split_idx] = read_range_image_binary(filenames[0]).flatten()
+                self.range_image_pairs[idx, self.pair_split_idx:] = read_range_image_binary(filenames[1]).flatten()
         
             # Crop the values out of the detection range
             self.range_image_pairs[self.range_image_pairs < 10e-10] = self.lidar_out['norm_r']
@@ -115,8 +115,8 @@ class RangeImagesDataset(Dataset):
             input = open(self.input_range_image_filenames[item], 'rb')
             output_range_image_filename = self.output_range_image_filenames[item]
             output = open(self.output_range_image_filenames[item], 'rb')
-            input_range_image = Upload_rimg(input_range_image_filename, self.lidar_in['channels'])#read_range_image_binary(input_range_image_filename)
-            output_range_image = Upload_rimg(output_range_image_filename, self.lidar_out['channels'])#read_range_image_binary(output_range_image_filename) ##
+            input_range_image = read_range_image_binary(input_range_image_filename)
+            output_range_image = read_range_image_binary(output_range_image_filename) ##
 
             # Crop the values out of the detection range
             input_range_image[input_range_image < 10e-10] = self.lidar_in['norm_r']

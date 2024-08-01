@@ -35,9 +35,9 @@ class ILN(nn.Module):
         self.h = h  # num of heads
 
         # Encoder: EDSR
-        #self.encoder = EDSRLiDAR(n_resblocks=32, n_feats=128, res_scale=1.0)
+        self.encoder = EDSRLiDAR(n_resblocks=32, n_feats=128, res_scale=1.0)
         #self.encoder = EDSRLiDAR(n_resblocks=16, n_feats=64, res_scale=1.0)
-        self.encoder = EDSRLiDAR(n_resblocks=8, n_feats=32, res_scale=1.0)
+        #self.encoder = EDSRLiDAR(n_resblocks=8, n_feats=32, res_scale=1.0)
 
         # Attention: ViT
         dim = self.encoder.out_dim #dim == 128

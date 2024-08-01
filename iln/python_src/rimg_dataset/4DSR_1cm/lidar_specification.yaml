@@ -1,0 +1,9 @@
+channels: 64
+points_per_ring: 64
+max_v : 45  # [ang]
+min_v:  -45  # [ang]
+max_h:  0  # [ang]
+min_h:  -90  # [ang]
+norm_r: 10 # the maximum value of detection distance [m]
+min_r: 0.5 # [m]
+max_r: 10 # [m]

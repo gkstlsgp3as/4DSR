@@ -21,6 +21,24 @@ def generate_dataset(dataset_config):
     """
     return dataset_list[dataset_config['type']](**dataset_config['args'])
 
+def Upload_rimg(file_path, resol):
+    import scipy.ndimage
+    import struct
+    with open(file_path, 'rb') as f:
+        # Read the metadata (dimensions)
+        width, height = struct.unpack('QQ', f.read(16))
+        # Initialize an array to hold the range image data
+        range_image = np.zeros((height, width), dtype=np.float16)
+        
+        # Read the range image data
+        for row in range(height):
+            for col in range(width):
+                # Read 2 bytes (float16) and convert to float
+                range_image[row, col] = np.frombuffer(f.read(2), dtype=np.float16)[0]
+
+    range_image = scipy.ndimage.zoom(np.array(range_image, np.float32), resol / np.array(range_image.shape) , order=0)
+    
+    return range_image
 
 def read_range_image_binary(filename, dtype=np.float16, lidar=None):
     """
