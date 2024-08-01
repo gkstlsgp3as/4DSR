@@ -1,0 +1,205 @@
+model:
+  name: spvcnn
+  cr: 0.5
+
+data:
+  num_classes: 11
+  ignore_label: 255
+  training_size: 40000
+
+train:
+  seed: 1588147245
+  deterministic: False
+
+dataset:
+  name: semantic_kitti
+  root: ../seg_eval_data/H_bin/sequences   #../super_resolution_data/High_Resolution_bin/sequences
+  num_points: 80000
+  voxel_size: 0.05
+
+num_epochs: 15
+batch_size: 32
+
+criterion:
+  name: cross_entropy
+  ignore_index: 255
+
+optimizer:
+  name: sgd
+  lr: 2.4e-1
+  weight_decay: 1.0e-4
+  momentum: 0.9
+  nesterov: true
+
+scheduler:
+  name: cosine_warmup
+
+workers_per_gpu: 0
+distributed: True
+amp_enabled: True
+
+label_name_mapping:
+  unlabeled: 0
+  outlier: 1
+  car: 10
+  two_wheel_vehicle: 15
+  pedestrian: 30
+  road: 40
+  sidewalk: 48
+  fence: 51
+  structure: 52
+  trunk: 71
+  pole: 80
+  traffic_sign: 81
+  traffic_light: 99
+
+kept_labels:
+ - car
+ - two_wheel_vehicle
+ - pedestrian
+ - road
+ - sidewalk
+ - fence
+ - structure
+ - trunk
+ - pole
+ - traffic_sign
+ - traffic_light
+
+seq:
+  train:
+    - '095'
+    - '060'
+    - '082'
+    - '116'
+    - '107'
+    - '125'
+    - '076'
+    - '099'
+    - '097'
+    - '067'
+    - '018'
+    - '034'
+    - '114'
+    - '126'
+    - '016'
+    - '039'
+    - '015'
+    - '013'
+    - '094'
+    - '020'
+    - '041'
+    - '093'
+    - '128'
+    - '084'
+    - '083'
+    - '122'
+    - '059'
+    - '032'
+    - '063'
+    - '069'
+    - '026'
+    - '065'
+    - '021'
+    - '047'
+    - '005'
+    - '085'
+    - '101'
+    - '071'
+    - '053'
+    - '012'
+    - '092'
+    - '055'
+    - '052'
+    - '091'
+    - '044'
+    - '036'
+    - '031'
+    - '086'
+    - '105'
+    - '090'
+    - '079'
+    - '029'
+    - '127'
+    - '004'
+    - '129'
+    - '040'
+    - '027'
+    - '118'
+    - '109'
+    - '106'
+    - '064'
+    - '000'
+    - '080'
+    - '077'
+    - '028'
+    - '050'
+    - '024'
+    - '019'
+    - '110'
+    - '009'
+    - '056'
+    - '003'
+    - '043'
+    - '088'
+    - '042'
+    - '007'
+    - '023'
+    - '035'
+    - '038'
+    - '112'
+    - '111'
+    - '033'
+    - '124'
+    - '046'
+    - '068'
+    - '011'
+    - '037'
+    - '006'
+    - '008'
+    - '075'
+    - '062'
+    - '103'
+    - '030'
+    - '002'
+    - '051'
+    - '001'
+    - '131'
+    - '123'
+    - '045'
+    - '089'
+    - '057'
+    - '102'
+    - '120'
+    - '130'
+    - '115'
+  val:
+    - '073'
+    - '014'
+    - '022'
+    - '098'
+    - '074'
+    - '119'
+    - '078'
+    - '066'
+    - '049'
+    - '108'
+    - '061'
+    - '070'
+    - '025'  
+  test:
+    - '117'
+    - '010'
+    - '104'
+    - '054'
+    - '081'
+    - '058'
+    - '048'
+    - '017'
+    - '087'
+    - '113'
+    - '121'
+    - '072'
+    - '100'
+    - '096'
+

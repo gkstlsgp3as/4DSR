@@ -1,0 +1,32 @@
+dataset:
+  name: 4DSR
+  type: range_samples_from_image
+  args:
+    train: True
+    directory: ./rimg_dataset/4DSR/
+    scene_ids:
+      - Lidar_sr_data
+    res_in: '384_216_origin/train' 
+    res_out: '1920_1080_origin/train'
+    num_of_samples: 82944 #h*w
+    memory_fetch: false
+
+dataset_val:
+  name: 4DSR
+  type: range_samples_from_image
+  args:
+    train: False
+    directory: ./rimg_dataset/4DSR/
+    scene_ids:
+      - Lidar_sr_data
+    res_in: '384_216_origin/valid'
+    res_out: '1920_1080_origin/valid'
+    num_of_samples: 82944 #h*w
+    memory_fetch: false
+
+model:
+  name: iln
+  output: ./models/trained/iln_4dsr
+  args:
+    d: 1
+    h: 4

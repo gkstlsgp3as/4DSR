@@ -1,0 +1,89 @@
+model:
+  name: spvcnn
+  cr: 0.5
+
+data:
+  num_classes: 11
+  ignore_label: 255
+  training_size: 40000
+
+train:
+  seed: 1588147245
+  deterministic: False
+
+dataset:
+  name: semantic_kitti
+  root: ../super_resolution_data/Low_Resolution_bin/sequences  
+  num_points: 80000
+  voxel_size: 0.05
+
+num_epochs: 15
+batch_size: 32
+
+criterion:
+  name: cross_entropy
+  ignore_index: 255
+
+optimizer:
+  name: sgd
+  lr: 2.4e-1
+  weight_decay: 1.0e-4
+  momentum: 0.9
+  nesterov: true
+
+scheduler:
+  name: cosine_warmup
+
+workers_per_gpu: 0
+distributed: True
+amp_enabled: True
+
+label_name_mapping:
+  unlabeled: 0
+  outlier: 1
+  car: 10
+  two_wheel_vehicle: 15
+  pedestrian: 30
+  road: 40
+  sidewalk: 48
+  fence: 51
+  structure: 52
+  trunk: 71
+  pole: 80
+  traffic_sign: 81
+  traffic_light: 99
+
+kept_labels:
+ - car
+ - two_wheel_vehicle
+ - pedestrian
+ - road
+ - sidewalk
+ - fence
+ - structure
+ - trunk
+ - pole
+ - traffic_sign
+ - traffic_light
+
+seq:
+  train:
+    - '117'
+  val:
+    - '117'
+  test:
+    - '117'
+    - '010'
+    - '104'
+    - '054'
+    - '081'
+    - '058'
+    - '048'
+    - '017'
+    - '087'
+    - '113'
+    - '121'
+    - '072'
+    - '100'
+    - '096'
+

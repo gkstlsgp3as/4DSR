@@ -1,0 +1,32 @@
+dataset:
+  name: Custom
+  type: range_samples_from_image
+  args:
+    train: True
+    directory: ./rimg_dataset/Custom_2/
+    scene_ids:
+      - Lidar_sr_data
+    res_in: '32_1024_downsample/train' 
+    res_out: '128_1024_origin/train'
+    num_of_samples: 32768 #h*w
+    memory_fetch: false
+
+dataset_val:
+  name: Custom
+  type: range_samples_from_image
+  args:
+    train: False
+    directory: ./rimg_dataset/Custom_2/
+    scene_ids:
+      - Lidar_sr_data
+    res_in: '32_1024_downsample/valid'
+    res_out: '128_1024_origin/valid'
+    num_of_samples: 32768 #h*w
+    memory_fetch: false
+
+model:
+  name: iln
+  output: ./models/trained/iln_0d
+  args:
+    d: 1
+    h: 4

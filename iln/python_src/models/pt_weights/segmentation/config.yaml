@@ -1,0 +1,187 @@
+model:
+  name: spvcnn
+  cr: 0.5
+
+data:
+  num_classes: 6
+  ignore_label: 255
+  training_size: 4112
+
+train:
+  seed: 1588147245
+  deterministic: False
+
+dataset:
+  name: semantic_kitti
+  root: /workspace/user/jingi/SSD_4T/denoise_data/ouster_noise_bin/sequences
+  num_points: 80000
+  voxel_size: 0.05
+
+num_epochs: 15
+batch_size: 2
+
+criterion:
+  name: cross_entropy
+  ignore_index: 255
+
+optimizer:
+  name: sgd
+  lr: 2.4e-1
+  weight_decay: 1.0e-4
+  momentum: 0.9
+  nesterov: true
+
+scheduler:
+  name: cosine_warmup
+
+workers_per_gpu: 0
+distributed: True
+amp_enabled: True
+
+label_name_mapping:
+  unlabeled: 0
+  outlier: 1
+  vehicle: 20
+  pedestrian: 30
+  structure: 52
+  fog: 100
+  rain: 101
+  dust: 103
+
+kept_labels:
+ - vehicle
+ - pedestrian
+ - structure
+ - fog
+ - rain
+ - dust
+
+seq:
+  train:
+    - '113'
+    - '069'
+    - '008'
+    - '058'
+    - '085'
+    - '059'
+    - '098'
+    - '108'
+    - '024'
+    - '105'
+    - '112'
+    - '087'
+    - '030'
+    - '114'
+    - '051'
+    - '016'
+    - '027'
+    - '040'
+    - '120'
+    - '015'
+    - '092'
+    - '121'
+    - '012'
+    - '124'
+    - '084'
+    - '083'
+    - '004'
+    - '104'
+    - '093'
+    - '063'
+    - '050'
+    - '026'
+    - '032'
+    - '057'
+    - '123'
+    - '103'
+    - '100'
+    - '017'
+    - '036'
+    - '005'
+    - '018'
+    - '064'
+    - '111'
+    - '091'
+    - '122'
+    - '049'
+    - '031'
+    - '107'
+    - '070'
+    - '061'
+    - '029'
+    - '043'
+    - '072'
+    - '101'
+    - '034'
+    - '089'
+    - '052'
+    - '106'
+    - '038'
+    - '000'
+    - '080'
+    - '067'
+    - '088'
+    - '102'
+    - '118'
+    - '037'
+    - '006'
+    - '003'
+    - '117'
+    - '099'
+    - '042'
+    - '007'
+    - '023'
+    - '035'
+    - '074'
+    - '001'
+    - '062'
+    - '096'
+    - '095'
+    - '110'
+    - '047'
+    - '053'
+    - '011'
+    - '076'
+    - '075'
+    - '010'
+    - '046'
+    - '077'
+    - '045'
+    - '119'
+    - '109'
+    - '065'
+    - '097'
+    - '086'
+    - '082'
+    - '060'
+    - '094'
+    - '028'
+    - '068'
+    - '115'
+  val:
+    - '048'
+    - '056'
+    - '073'
+    - '022'
+    - '079'
+    - '090'
+    - '039'
+    - '020'
+    - '013'
+    - '009'
+    - '025'
+    - '002'
+  test:
+    - '019'
+    - '054'
+    - '033'
+    - '081'
+    - '071'
+    - '014'
+    - '021'
+    - '044'
+    - '055'
+    - '078'
+    - '116'
+    - '041'
+    - '066'
